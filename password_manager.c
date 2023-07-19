@@ -5,6 +5,63 @@
 
 #define MAX 100
 
+void add_credential(Credential c) {
+    // Make sure you don't exceed the array size
+    if (num_credentials >= MAX) {
+        printf("No more space for new credentials!\n");
+        return;
+    }
+    // Add credential to the credentials array
+    credentials[num_credentials++] = c;
+}
+
+void delete_credential(char* site) {
+    // Find the credential to delete
+    int i = 0;
+    while (i < num_credentials && strcmp(credentials[i].site, site) != 0) {
+        i++;
+    }
+
+    // If credential not found, return
+    if (i == num_credentials) {
+        printf("Credential not found!\n");
+        return;
+    }
+
+    // Shift the rest of the credentials down
+    for (int j = i; j < num_credentials - 1; j++) {
+        credentials[j] = credentials[j + 1];
+    }
+    num_credentials--;
+    printf("Credential deleted.\n");
+}
+
+void update_credential(Credential c) {
+    // Find the credential to update
+    int i = 0;
+    while (i < num_credentials && strcmp(credentials[i].site, c.site) != 0) {
+        i++;
+    }
+
+    // If credential not found, return
+    if (i == num_credentials) {
+        printf("Credential not found!\n");
+        return;
+    }
+
+    // Update the credential
+    credentials[i] = c;
+    printf("Credential updated.\n");
+}
+
+void list_credentials() {
+    // Print all stored credentials
+    for (int i = 0; i < num_credentials; i++) {
+        printf("Site: %s, Username: %s, Password: %s\n", credentials[i].site, credentials[i].username, credentials[i].password);
+    }
+}
+
+
 typedef struct {
     char site[MAX];
     char username[MAX];
